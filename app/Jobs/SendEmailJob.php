@@ -31,7 +31,16 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {
+        // dd($send_mail);
+        $minute = 1;
+        $count = 0;
         $email = new SendEmailDemo();
-        Mail::to($this->send_mail)->send($email);
+        foreach($this->send_mail as $user) {
+            if(count($user) % 2 === 0) {
+                $hours++;
+                Mail::to($user)->later(now()->addMinutes($minute), $email);
+            }
+        // $count++;
+        }
     }
 }

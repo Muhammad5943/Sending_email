@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SentEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test/email', function(){
-
-	$send_mail = 'muhammad.aji.putra30@gmail.com';
-
-    dispatch(new App\Jobs\SendEmailJob($send_mail));
-
-    dd('send mail successfully !!');
-});
+Route::get('/test/email', [SentEmailController::class, 'sentEmail']);
