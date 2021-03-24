@@ -25,7 +25,7 @@ class SentEmailController extends Controller
         // dd($send_mail);
         dispatch(new SendEmailJob($send_mail));
 
-        dd($send_mail);
+        // dd($send_mail);
         // return $send_mail;
 
     // cara 2 /* with out queue */
