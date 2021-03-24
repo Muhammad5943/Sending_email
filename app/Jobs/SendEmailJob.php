@@ -14,6 +14,7 @@ class SendEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $send_mail;
+
     /**
      * Create a new job instance.
      *
@@ -22,6 +23,7 @@ class SendEmailJob implements ShouldQueue
     public function __construct($send_mail)
     {
         $this->send_mail = $send_mail;
+        // dd($send_mail);
     }
 
     /**
@@ -31,16 +33,18 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        // dd($send_mail);
-        $minute = 1;
-        $count = 0;
-        $email = new SendEmailDemo();
-        foreach($this->send_mail as $user) {
-            if(count($user) % 2 === 0) {
-                $hours++;
-                Mail::to($user)->later(now()->addMinutes($minute), $email);
+        $users = $this->send_mail;
+        // dd(count($this->send_mail));
+
+        $minute = 0;
+        $count = count($this->send_mail);
+
+        foreach($users as $user) {
+            if($count % 5 === 0) {
+                $minute++;
             }
-        // $count++;
+            Mail::to($user)->later(now()->addMinutes($minute), new SendEmailDemo($user));
+            $count++;
         }
     }
 }
